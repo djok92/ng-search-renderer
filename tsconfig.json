@@ -17,7 +17,15 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "ng-search-renderer": [
+        "dist/ng-search-renderer"
+      ],
+      "ng-search-renderer/*": [
+        "dist/ng-search-renderer/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
