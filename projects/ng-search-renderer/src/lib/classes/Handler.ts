@@ -1,5 +1,5 @@
-import { Product } from "../interfaces/Product";
 import { ResultItem } from "../interfaces/Result-item";
+import { Product } from "../interfaces/Product";
 
 export class Handler {
   constructor() {}
@@ -8,7 +8,7 @@ export class Handler {
       return {
         title: product.title,
         imageUrl: product.imageUrl,
-        tags: product.category.split(" ")
+        tags: product.title.split(" ")
       };
     });
   }

@@ -1,12 +1,11 @@
-import { NgModule } from '@angular/core';
-import { NgSearchRendererComponent } from './ng-search-renderer.component';
-
-
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { CardComponent } from "./components/card/card.component";
+import { ResultsComponent } from "./pages/results/results.component";
 
 @NgModule({
-  declarations: [NgSearchRendererComponent],
-  imports: [
-  ],
-  exports: [NgSearchRendererComponent]
+  declarations: [ResultsComponent, CardComponent],
+  imports: [BrowserModule],
+  exports: [ResultsComponent]
 })
-export class NgSearchRendererModule { }
+export class NgSearchRendererModule {}

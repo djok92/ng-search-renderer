@@ -1,0 +1,5 @@
+<div *ngFor="let searchResult of searchResults">
+  <h4>{{ searchResult?.title }}</h4>
+  <img [src]="searchResult?.imageUrl" alt="result image" />
+  <p *ngFor="let tag of searchResult?.tags">{{ tag }}</p>
+</div>
