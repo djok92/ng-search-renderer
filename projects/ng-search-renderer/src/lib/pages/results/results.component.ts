@@ -48,9 +48,6 @@ export class ResultsComponent implements OnInit, OnChanges, OnDestroy {
       changes["products"].previousValue !== changes["products"].currentValue
     ) {
       this.resultSevice.handleProducts(this.activeCategoryName, this.products);
-      console.log(this.activeCategoryName);
-      console.log(this.categories);
-      console.log(this.products);
     }
   }
 
@@ -66,7 +63,6 @@ export class ResultsComponent implements OnInit, OnChanges, OnDestroy {
       .pipe(takeUntil(this._destroy$))
       .subscribe((hasError: boolean) => {
         this.hasError = hasError;
-        console.log(hasError);
       });
   }
 
