@@ -30,13 +30,16 @@ export class ResultService {
   }
 
   public handleProducts(categoryName: string, products: Product[]): void {
+    console.log(categoryName);
+    console.log(products);
     let mappedResults;
     let activeCategory: Category;
 
-    activeCategory = this._categories$.value.find(
-      (category: Category) =>
-        category.name.toLowerCase() === categoryName.toLowerCase()
-    );
+    activeCategory = this._categories$.value.find((category: Category) => {
+      console.log(category);
+      return category.name.toLowerCase() === categoryName.toLowerCase();
+    });
+    console.log(activeCategory);
 
     if (activeCategory) {
       this.setError(false);
