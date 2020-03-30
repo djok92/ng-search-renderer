@@ -1,0 +1,68 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.card {
+  width: 200px;
+  height: 200px;
+  position: relative;
+
+  &__overlay {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #000000);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .card__download {
+      display: none;
+      color: #ffffff;
+    }
+    &:hover {
+      background-image: linear-gradient(225deg, #de45bd, #8563ff 50%);
+      opacity: 0.8;
+      z-index: 20;
+      .card__download {
+        display: inline;
+        cursor: pointer;
+      }
+      .card__content {
+        display: none;
+      }
+    }
+  }
+
+  &__image-holder {
+    max-height: 100%;
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+  }
+
+  &__content {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    color: #ffffff;
+    z-index: 1;
+    &--hidden {
+      display: none;
+    }
+    &__title {
+      font-weight: bold;
+      font-size: 14px;
+    }
+    &__tag {
+      margin-right: 8px;
+      font-size: 12px;
+    }
+  }
+}

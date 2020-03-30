@@ -1,1 +1,18 @@
-<p>card works!</p>
+<div class="card">
+  <div class="card__image-holder">
+    <figure>
+      <img [src]="imageUrl" alt="result image" />
+    </figure>
+    <div class="card__overlay">
+      <div class="card__content">
+        <h4 class="card__content__title">{{ title }}</h4>
+        <span class="card__content__tag" *ngFor="let tag of tags"
+          >#{{ tag }}</span
+        >
+      </div>
+      <span class="card__download">
+        <fa-icon [icon]="downloadIcon" size="3x"></fa-icon>
+      </span>
+    </div>
+  </div>
+</div>

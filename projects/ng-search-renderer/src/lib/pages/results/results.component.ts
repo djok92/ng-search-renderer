@@ -1,11 +1,21 @@
-import { Component, OnInit, Input, OnChanges, OnDestroy } from "@angular/core";
-import { Handler } from "../../classes/Handler";
+import {
+  Component,
+  OnInit,
+  Input,
+  OnChanges,
+  OnDestroy,
+  SimpleChange
+} from "@angular/core";
 import { ReplaySubject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { ResultService } from "../../services/result.service";
 import { ResultItem } from "../../interfaces/Result-item";
 import { Product } from "../../interfaces/Product";
 import { Category } from "../../interfaces/Category";
+import {
+  faCloudDownloadAlt,
+  IconDefinition
+} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: "ng-results",
@@ -15,33 +25,44 @@ import { Category } from "../../interfaces/Category";
 export class ResultsComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private resultSevice: ResultService) {}
 
+  public downloadIcon: IconDefinition = faCloudDownloadAlt;
   public searchResults: ResultItem[];
+  public hasError: boolean;
   private _destroy$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
 
   @Input() products: Product[];
   @Input() categories: Category[];
   @Input() activeCategoryName: string;
 
-  ngOnChanges() {
+  ngOnChanges(changes: { [propName: string]: SimpleChange }) {
     if (
-      this.activeCategoryName &&
-      this.products &&
-      this.resultSevice.categories.length > 0
+      // Coulda used changes["categories"].firstChange, but opted for this because this would run if list of categories did really change sometime.
+      changes["categories"] &&
+      changes["categories"].previousValue !== changes["categories"].currentValue
     ) {
-      console.log("fired");
+      this.resultSevice.setCategories(this.categories);
+    }
+
+    if (
+      changes["products"] &&
+      changes["products"].previousValue !== changes["products"].currentValue
+    ) {
       this.resultSevice.handleProducts(this.activeCategoryName, this.products);
     }
   }
 
   ngOnInit() {
-    this.resultSevice.mapCategories(this.categories);
-    this.resultSevice.handleProducts(this.activeCategoryName, this.products);
     this.resultSevice
       .getResultItems()
       .pipe(takeUntil(this._destroy$))
       .subscribe((searchResultItems: ResultItem[]) => {
         this.searchResults = searchResultItems;
-        console.log(this.searchResults);
+      });
+    this.resultSevice
+      .getError()
+      .pipe(takeUntil(this._destroy$))
+      .subscribe((hasError: boolean) => {
+        this.hasError = hasError;
       });
   }
 

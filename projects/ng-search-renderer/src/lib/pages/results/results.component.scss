@@ -1,0 +1,26 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.search-results {
+  padding: 20px 10px;
+
+  &__subtitle {
+    margin: 0 0 20px 20px;
+    color: #848c97;
+    font-weight: bold;
+  }
+
+  &__card-container {
+    max-width: 910px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    & > * {
+      margin: 0 0 20px 20px;
+    }
+  }
+}

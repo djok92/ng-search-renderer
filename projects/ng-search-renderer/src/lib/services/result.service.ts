@@ -11,40 +11,45 @@ import { Handler } from "../classes/Handler";
 export class ResultService {
   constructor() {}
 
-  public categories: Category[] = [];
+  private _categories$: BehaviorSubject<Category[]> = new BehaviorSubject<
+    Category[]
+  >([]);
   private _searchResults$: BehaviorSubject<ResultItem[]> = new BehaviorSubject<
     ResultItem[]
   >([]);
+  private _error$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
 
-  public mapCategories(categories: Category[]): void {
-    this.categories = categories.map((category: Category) => {
-      return {
-        name: category.name,
-        // handlerName: `${category.name.toLocaleLowerCase()}Handler`,
-        active: false
-      };
-    });
-    console.log(this.categories);
+  public setCategories(categories: Category[]): void {
+    this._categories$.next(categories);
+  }
+
+  public getError(): Observable<boolean> {
+    return this._error$.asObservable();
   }
 
   public handleProducts(categoryName: string, products: Product[]): void {
     let mappedResults;
-    const activeCategory = this.getActiveCategory(categoryName);
-    console.log(activeCategory);
-    console.log(this.categories);
-    console.log(activeCategory.active);
-    if (!activeCategory.active) {
-      console.log("ran create first time");
-      activeCategory.handler = new Handler();
-      activeCategory.active = true;
-      mappedResults = activeCategory.handler.handleProduct(products);
-      console.log(this.categories);
-    } else {
-      console.log("used existing");
-      mappedResults = activeCategory.handler.handleProduct(products);
-    }
+    let activeCategory: Category;
 
-    this.setResultItems(mappedResults);
+    activeCategory = this._categories$.value.find(
+      (category: Category) =>
+        category.name.toLowerCase() === categoryName.toLowerCase()
+    );
+
+    if (activeCategory) {
+      if (!activeCategory.active) {
+        activeCategory.active = true;
+        activeCategory.handler = new Handler();
+        mappedResults = activeCategory.handler.handleProduct(products);
+      } else {
+        mappedResults = activeCategory.handler.handleProduct(products);
+      }
+      this.setResultItems(mappedResults);
+    } else {
+      this.setError(true);
+    }
   }
 
   public getResultItems(): Observable<ResultItem[]> {
@@ -55,11 +60,7 @@ export class ResultService {
     this._searchResults$.next(mappedItems);
   }
 
-  private getActiveCategory(categoryName: string): Category {
-    console.log(categoryName);
-    return this.categories.find(
-      (category: Category) =>
-        category.name.toLowerCase() === categoryName.toLowerCase()
-    );
+  private setError(value: boolean): void {
+    this._error$.next(value);
   }
 }
