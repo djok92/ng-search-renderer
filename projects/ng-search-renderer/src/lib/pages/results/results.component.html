@@ -1,5 +1,5 @@
 <div
-  *ngIf="products.length > 0 || hasError; else noResults"
+  *ngIf="products.length > 0 && !hasError; else noResults"
   class="search-results"
 >
   <h4 class="search-results__subtitle" *ngIf="activeCategoryName">

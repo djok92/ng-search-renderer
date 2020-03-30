@@ -39,6 +39,7 @@ export class ResultService {
     );
 
     if (activeCategory) {
+      this.setError(false);
       if (!activeCategory.active) {
         activeCategory.active = true;
         activeCategory.handler = new Handler();
