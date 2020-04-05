@@ -1,10 +1,10 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
+import { Component, OnInit, Input } from '@angular/core';
+import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: "ng-card",
-  templateUrl: "./card.component.html",
-  styleUrls: ["./card.component.scss"]
+  selector: 'ng-card',
+  templateUrl: './card.component.html',
+  styleUrls: ['./card.component.scss'],
 })
 export class CardComponent implements OnInit {
   constructor() {}

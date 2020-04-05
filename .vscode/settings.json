@@ -1,0 +1,5 @@
+{
+    "prettier.useEditorConfig": false,
+    "prettier.printWidth": 140,
+    "prettier.singleQuote": true
+}

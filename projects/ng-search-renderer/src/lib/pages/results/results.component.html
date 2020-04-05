@@ -1,18 +1,11 @@
-<div
-  *ngIf="products.length > 0 && !hasError; else noResults"
-  class="search-results"
->
+<div *ngIf="products.length > 0 && !hasError; else noResults" class="search-results">
   <h4 class="search-results__subtitle" *ngIf="activeCategoryName">
     Results from {{ activeCategoryName | uppercase }}
   </h4>
   <div class="search-results__card-container">
     <ng-container *ngFor="let searchResult of searchResults">
-      <ng-card
-        [title]="searchResult?.title"
-        [imageUrl]="searchResult?.imageUrl"
-        [tags]="searchResult?.tags"
-        [downloadIcon]="downloadIcon"
-      ></ng-card>
+      <ng-card [title]="searchResult?.title" [imageUrl]="searchResult?.imageUrl" [tags]="searchResult?.tags"
+        [downloadIcon]="downloadIcon"></ng-card>
     </ng-container>
   </div>
 </div>

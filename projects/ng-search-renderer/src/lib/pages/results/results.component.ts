@@ -1,26 +1,16 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  OnChanges,
-  OnDestroy,
-  SimpleChange
-} from "@angular/core";
-import { ReplaySubject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
-import { ResultService } from "../../services/result.service";
-import { ResultItem } from "../../interfaces/Result-item";
-import { Product } from "../../interfaces/Product";
-import { Category } from "../../interfaces/Category";
-import {
-  faCloudDownloadAlt,
-  IconDefinition
-} from "@fortawesome/free-solid-svg-icons";
+import { Component, OnInit, Input, OnChanges, OnDestroy, SimpleChange } from '@angular/core';
+import { ReplaySubject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { ResultService } from '../../services/result.service';
+import { ResultItem } from '../../interfaces/Result-item';
+import { Product } from '../../interfaces/Product';
+import { Category } from '../../interfaces/Category';
+import { faCloudDownloadAlt, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: "ng-results",
-  templateUrl: "./results.component.html",
-  styleUrls: ["./results.component.scss"]
+  selector: 'ng-results',
+  templateUrl: './results.component.html',
+  styleUrls: ['./results.component.scss'],
 })
 export class ResultsComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private resultSevice: ResultService) {}
@@ -33,21 +23,19 @@ export class ResultsComponent implements OnInit, OnChanges, OnDestroy {
   @Input() products: Product[];
   @Input() categories: Category[];
   @Input() activeCategoryName: string;
+  @Input() searchMode: 'new' | 'refresh';
 
   ngOnChanges(changes: { [propName: string]: SimpleChange }) {
     if (
       // Coulda used changes["categories"].firstChange, but opted for this because this would run if list of categories did really change sometime.
-      changes["categories"] &&
-      changes["categories"].previousValue !== changes["categories"].currentValue
+      changes['categories'] &&
+      changes['categories'].previousValue !== changes['categories'].currentValue
     ) {
       this.resultSevice.setCategories(this.categories);
     }
 
-    if (
-      changes["products"] &&
-      changes["products"].previousValue !== changes["products"].currentValue
-    ) {
-      this.resultSevice.handleProducts(this.activeCategoryName, this.products);
+    if (changes['products'] && changes['products'].previousValue !== changes['products'].currentValue) {
+      this.resultSevice.handleProducts(this.activeCategoryName, this.products, this.searchMode);
     }
   }
 
