@@ -32,13 +32,11 @@ export class ResultService {
     if (activeCategory) {
       this.setError(false);
       if (searchMode === 'new') {
-        console.log('created new handler');
         this.clearHandlers();
         activeCategory.active = true;
         activeCategory.handler = new Handler();
         mappedResults = activeCategory.handler.handleProduct(products);
       } else {
-        console.log('used same handler');
         mappedResults = activeCategory.handler.handleProduct(products);
       }
       this.setResultItems(mappedResults);
